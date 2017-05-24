@@ -17,7 +17,7 @@ resource "aws_route_table" "default" {
 ## Availability Zone Routing Tables
 ## Will allow AZ resilient NAT routing
 resource "aws_route_table" "az_rts" {
-  count  = "${length(split(",", lookup(var.azs, var.aws_region)))}"
+  count  = "${length(data.aws_availability_zones.available.names)}"
   vpc_id = "${aws_vpc.main.id}"
 
   route {
@@ -31,4 +31,3 @@ resource "aws_route_table" "az_rts" {
     Name    = "${var.environment}-${var.product}-rt-az${count.index}"
   }
 }
-
