@@ -3,8 +3,7 @@ resource "aws_internet_gateway" "main" {
 
   tags {
     Env     = "${var.environment}"
-    Product = "${var.product}"
-    Name    = "${var.environment}-${var.product}-main"
+    Name    = "${var.environment}-igw"
   }
 }
 

@@ -36,9 +36,9 @@ $ terraform apply
 To create a VPC from a module:
 ```
 module "keto-infra" {
-  source     = "https://github.com/UKHomeOffice/keto-infra"
-  aws-region = "eu-west-2"
-  vpc_cidr   = "10.200.0.0/16"
-  product    = "my-keto-infra"
+  aws-region  = "eu-west-2"
+  environment = "prod"
+  source      = "https://github.com/UKHomeOffice/keto-infra"
+  vpc_cidr    = "10.200.0.0/16"
 }
 ```

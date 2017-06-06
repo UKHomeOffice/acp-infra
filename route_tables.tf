@@ -8,9 +8,9 @@ resource "aws_route_table" "default" {
   }
 
   tags {
-    Env     = "${var.environment}"
-    Product = "${var.product}"
-    Name    = "${var.environment}-${var.product}-default-rt"
+    Env               = "${var.environment}"
+    Name              = "${var.environment}-default-rt"
+    KubernetesCluster = "${var.environment}"
   }
 }
 
@@ -26,8 +26,7 @@ resource "aws_route_table" "az_rts" {
   }
 
   tags {
-    Env     = "${var.environment}"
-    Product = "${var.product}"
-    Name    = "${var.environment}-${var.product}-rt-az${count.index}"
+    Env  = "${var.environment}"
+    Name = "${var.environment}-rt-az${count.index}"
   }
 }
