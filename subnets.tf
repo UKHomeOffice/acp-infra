@@ -38,7 +38,7 @@ resource "aws_subnet" "nat_subnets" {
 resource "aws_route_table_association" "nat_intances" {
   count          = "${length(data.aws_availability_zones.available.names)}"
   subnet_id      = "${element(aws_subnet.nat_subnets.*.id, count.index)}"
-  route_table_id = "${element(aws_route_table.az_rts.*.id, count.index)}"
+  route_table_id = "${aws_route_table.default.id}"
 }
 
 resource "aws_subnet" "elb_subnets" {
