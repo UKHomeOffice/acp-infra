@@ -6,9 +6,10 @@ resource "aws_subnet" "default_subnets" {
   cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + var.default_subnet_offset)}"
 
   tags {
-    Env     = "${var.environment}"
-    Product = "${var.product}"
-    Name    = "${var.environment}-${var.product}-default-az${count.index}"
+    Env               = "${var.environment}"
+    Role              = "default-subnets"
+    Name              = "${var.environment}--default-az${count.index}"
+    KubernetesCluster = "${var.environment}"
   }
 }
 
@@ -26,9 +27,10 @@ resource "aws_subnet" "nat_subnets" {
   cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + var.nat_subnet_offset)}"
 
   tags {
-    Env     = "${var.environment}"
-    Product = "${var.product}"
-    Name    = "${var.environment}-${var.product}-nat-az${count.index}"
+    Env               = "${var.environment}"
+    Role              = "nat-subnets"
+    Name              = "${var.environment}-nat-az${count.index}"
+    KubernetesCluster = "${var.environment}"
   }
 }
 
@@ -36,7 +38,7 @@ resource "aws_subnet" "nat_subnets" {
 resource "aws_route_table_association" "nat_intances" {
   count          = "${length(data.aws_availability_zones.available.names)}"
   subnet_id      = "${element(aws_subnet.nat_subnets.*.id, count.index)}"
-  route_table_id = "${element(aws_route_table.az_rts.*.id, count.index)}"
+  route_table_id = "${aws_route_table.default.id}"
 }
 
 resource "aws_subnet" "elb_subnets" {
@@ -46,9 +48,12 @@ resource "aws_subnet" "elb_subnets" {
   cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + var.elb_subnet_offset)}"
 
   tags {
-    Env     = "${var.environment}"
-    Product = "${var.product}"
-    Name    = "${var.environment}-${var.product}-elb-az${count.index}"
+    Env                               = "${var.environment}"
+    Role                              = "elb-subnets"
+    Name                              = "${var.environment}-elb-az${count.index}"
+    KubernetesCluster                 = "${var.environment}"
+    "kubernetes.io/role/internal-elb" = "true"
+    "kubernetes.io/role/elb"          = "true"
   }
 }
 

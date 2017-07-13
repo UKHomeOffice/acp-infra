@@ -8,10 +8,6 @@ variable "vpc_cidr" {
   default     = "10.111.0.0/16"
 }
 
-variable "product" {
-  default = "keto-infra"
-}
-
 variable "environment" {
   description = "The unique environment being created e.g. dev, production etc."
   default     = "test"
