@@ -1,29 +1,9 @@
-# Create the subnets required for the base VPN
-resource "aws_subnet" "default_subnets" {
-  count             = "${length(data.aws_availability_zones.available.names)}"
-  vpc_id            = "${aws_vpc.main.id}"
-  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
-  cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + var.default_subnet_offset)}"
 
-  tags {
-    Env               = "${var.environment}"
-    Role              = "default-subnets"
-    Name              = "${var.environment}--default-az${count.index}"
-    KubernetesCluster = "${var.environment}"
-  }
-}
-
-resource "aws_route_table_association" "nat_rtas" {
-  count          = "${length(data.aws_availability_zones.available.names)}"
-  subnet_id      = "${element(aws_subnet.default_subnets.*.id, count.index)}"
-  route_table_id = "${aws_route_table.default.id}"
-}
-
-# The private instance subnets
+# Create the NAT subnets where the managed NAT gateways live
 resource "aws_subnet" "nat_subnets" {
-  count             = "${length(data.aws_availability_zones.available.names)}"
+  count             = "${length(var.availability_zones)}"
   vpc_id            = "${aws_vpc.main.id}"
-  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+  availability_zone = "${var.availability_zones[count.index]}"
   cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + var.nat_subnet_offset)}"
 
   tags {
@@ -34,17 +14,18 @@ resource "aws_subnet" "nat_subnets" {
   }
 }
 
-# Route traffic from each instance AZ subnet to each AZ NAT gateway...
+# Associate the NAT subnets with the default routing table
 resource "aws_route_table_association" "nat_intances" {
-  count          = "${length(data.aws_availability_zones.available.names)}"
+  count          = "${length(var.availability_zones)}"
   subnet_id      = "${element(aws_subnet.nat_subnets.*.id, count.index)}"
   route_table_id = "${aws_route_table.default.id}"
 }
 
+# Create the ELB subnets
 resource "aws_subnet" "elb_subnets" {
-  count             = "${length(data.aws_availability_zones.available.names)}"
+  count             = "${length(var.availability_zones)}"
   vpc_id            = "${aws_vpc.main.id}"
-  availability_zone = "${data.aws_availability_zones.available.names[count.index]}"
+  availability_zone = "${var.availability_zones[count.index]}"
   cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + var.elb_subnet_offset)}"
 
   tags {
@@ -57,8 +38,9 @@ resource "aws_subnet" "elb_subnets" {
   }
 }
 
+# Associate the ELB subnets with default routing table
 resource "aws_route_table_association" "elb_rtas" {
-  count          = "${length(data.aws_availability_zones.available.names)}"
+  count          = "${length(var.availability_zones)}"
   subnet_id      = "${element(aws_subnet.elb_subnets.*.id, count.index)}"
   route_table_id = "${aws_route_table.default.id}"
 }

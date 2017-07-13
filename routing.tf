@@ -1,3 +1,4 @@
+
 # Configure all traffic in the public subnets to use the internet gateway
 resource "aws_route_table" "default" {
   vpc_id = "${aws_vpc.main.id}"
@@ -15,9 +16,8 @@ resource "aws_route_table" "default" {
 }
 
 ## Availability Zone Routing Tables
-## Will allow AZ resilient NAT routing
 resource "aws_route_table" "az_rts" {
-  count  = "${length(data.aws_availability_zones.available.names)}"
+  count  = "${length(var.availability_zones)}"
   vpc_id = "${aws_vpc.main.id}"
 
   route {
@@ -26,7 +26,8 @@ resource "aws_route_table" "az_rts" {
   }
 
   tags {
-    Env  = "${var.environment}"
-    Name = "${var.environment}-rt-az${count.index}"
+    Env               = "${var.environment}"
+    Name              = "${var.environment}-rt-az${count.index}"
+    KubernetesCluster = "${var.environment}"
   }
 }

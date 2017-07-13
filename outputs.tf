@@ -7,7 +7,6 @@ output "default_rt_id"           { value = "${aws_route_table.default.id}"}
 
 output "elb_subnets"             { value = "${zipmap(aws_subnet.elb_subnets.*.availability_zone, aws_subnet.elb_subnets.*.id)}" }
 output "nat_subnets"             { value = "${zipmap(aws_subnet.nat_subnets.*.availability_zone, aws_subnet.nat_subnets.*.id)}" }
-output "default_subnets"         { value = "${zipmap(aws_subnet.default_subnets.*.availability_zone, aws_subnet.default_subnets.*.id)}" }
 output "zone_rt_id"              { value = "${zipmap(aws_subnet.nat_subnets.*.availability_zone, aws_route_table.az_rts.*.id)}" }
 output "elb_cidr"                { value = "${zipmap(aws_subnet.elb_subnets.*.availability_zone, aws_subnet.elb_subnets.*.cidr_block)}" }
 output "nat_cidr"                { value = "${zipmap(aws_subnet.nat_subnets.*.availability_zone, aws_subnet.nat_subnets.*.cidr_block)}" }
