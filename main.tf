@@ -6,9 +6,5 @@ provider "aws" {}
 resource "aws_vpc" "main" {
   cidr_block = "${var.vpc_cidr}"
 
-  tags {
-    Env               = "${var.environment}"
-    Name              = "${var.environment}-vpc"
-    KubernetesCluster = "${var.environment}"
-  }
+  tags = "${merge(var.tags, map("Name", format("%s", var.name)), map("Env", format("%s", var.environment)), map("KubernetesCluster", format("%s", var.environment)))}"
 }

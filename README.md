@@ -3,12 +3,13 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| availability_zones | A collection of availability zones to build in | list | - | yes |
 | cloudtrail_bucket | A bucket to push the cloudtrail events to | string | `` | no |
 | elb_subnet_offset |  | string | `20` | no |
 | environment | The unique environment being created e.g. dev, production etc. | string | - | yes |
 | nat_subnet_offset |  | string | `30` | no |
+| tags | A set of tags applied to the vpc being created | string | `<map>` | no |
 | vpc_cidr | The CIRDR network block | string | `10.111.0.0/16` | no |
+| zones | A collection of availability zones to build in | list | - | yes |
 
 ## Outputs
 
