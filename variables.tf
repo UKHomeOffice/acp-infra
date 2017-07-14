@@ -7,7 +7,12 @@ variable "environment" {
   description = "The unique environment being created e.g. dev, production etc."
 }
 
-variable "availability_zones" {
+variable "tags" {
+  description = "A set of tags applied to the vpc being created"
+  default     = {}
+}
+
+variable "zones" {
   description = "A collection of availability zones to build in"
   type        = "list"
 }

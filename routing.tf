@@ -17,7 +17,7 @@ resource "aws_route_table" "default" {
 
 ## Availability Zone Routing Tables
 resource "aws_route_table" "az_rts" {
-  count  = "${length(var.availability_zones)}"
+  count  = "${length(var.zones)}"
   vpc_id = "${aws_vpc.main.id}"
 
   route {
