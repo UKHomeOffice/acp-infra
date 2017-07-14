@@ -10,7 +10,7 @@ resource "aws_internet_gateway" "main" {
 
 # Create the EIP for the NAT Gateways
 resource "aws_eip" "nat_ips" {
-  count  = "${length(var.zones)}"
+  count  = "${var.nat_gateway ? length(var.zones) : 0}"
   vpc    = true
 }
 
@@ -18,7 +18,7 @@ resource "aws_eip" "nat_ips" {
 resource "aws_nat_gateway" "nat_gws" {
   depends_on    = ["aws_internet_gateway.main"]
 
-  count         = "${length(var.zones)}"
+  count          = "${var.nat_gateway ? length(var.zones) : 0}"
   allocation_id = "${element(aws_eip.nat_ips.*.id, count.index)}"
   subnet_id     = "${element(aws_subnet.nat_subnets.*.id, count.index)}"
 }

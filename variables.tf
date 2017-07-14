@@ -12,6 +12,11 @@ variable "tags" {
   default     = {}
 }
 
+variable "nat_gateway" {
+  description = "Indicates if you wish to create a NAT gatewaes or not"
+  default     = true
+}
+
 variable "zones" {
   description = "A collection of availability zones to build in"
   type        = "list"
@@ -22,10 +27,17 @@ variable "cloudtrail_bucket" {
   default     = ""
 }
 
+variable "network_mask" {
+  description = "The network mask used to calculate the ELB and NAT subnets"
+  default     = 8
+}
+
 variable "elb_subnet_offset" {
-  default = "20"
+  description = "The network offset for the ELB subnets"
+  default     = "20"
 }
 
 variable "nat_subnet_offset" {
-  default = "30"
+  description = "The network offset for the NAT subnets"
+  default     = "30"
 }

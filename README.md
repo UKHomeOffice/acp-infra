@@ -4,9 +4,11 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | cloudtrail_bucket | A bucket to push the cloudtrail events to | string | `` | no |
-| elb_subnet_offset |  | string | `20` | no |
+| elb_subnet_offset | The network offset for the ELB subnets | string | `20` | no |
 | environment | The unique environment being created e.g. dev, production etc. | string | - | yes |
-| nat_subnet_offset |  | string | `30` | no |
+| nat_gateway | Indicates if you wish to create a NAT gatewaes or not | string | `true` | no |
+| nat_subnet_offset | The network offset for the NAT subnets | string | `30` | no |
+| network_mask | The network mask used to calculate the ELB and NAT subnets | string | `8` | no |
 | tags | A set of tags applied to the vpc being created | string | `<map>` | no |
 | vpc_cidr | The CIRDR network block | string | `10.111.0.0/16` | no |
 | zones | A collection of availability zones to build in | list | - | yes |

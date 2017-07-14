@@ -1,10 +1,10 @@
 
 # Create the NAT subnets where the managed NAT gateways live
 resource "aws_subnet" "nat_subnets" {
-  count             = "${length(var.zones)}"
+  count             = "${var.nat_gateway ? length(var.zones) : 0}"
   vpc_id            = "${aws_vpc.main.id}"
   availability_zone = "${var.zones[count.index]}"
-  cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + var.nat_subnet_offset)}"
+  cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.network_mask, count.index + var.nat_subnet_offset)}"
 
   tags {
     Env               = "${var.environment}"
@@ -16,7 +16,7 @@ resource "aws_subnet" "nat_subnets" {
 
 # Associate the NAT subnets with the default routing table
 resource "aws_route_table_association" "nat_intances" {
-  count          = "${length(var.zones)}"
+  count          = "${var.nat_gateway ? length(var.zones) : 0}"
   subnet_id      = "${element(aws_subnet.nat_subnets.*.id, count.index)}"
   route_table_id = "${aws_route_table.default.id}"
 }
@@ -26,7 +26,7 @@ resource "aws_subnet" "elb_subnets" {
   count             = "${length(var.zones)}"
   vpc_id            = "${aws_vpc.main.id}"
   availability_zone = "${var.zones[count.index]}"
-  cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, 8, count.index + var.elb_subnet_offset)}"
+  cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.network_mask, count.index + var.elb_subnet_offset)}"
 
   tags {
     Env                               = "${var.environment}"
