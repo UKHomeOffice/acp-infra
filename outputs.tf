@@ -27,11 +27,6 @@ output "dns_zone_id" {
   value       = "${aws_route53_zone.zone.id}"
 }
 
-output "dns_zone_nameservers" {
-  description = "The nameservers for the dns zone"
-  value       = "${aws_route53_zone.zone.name_servers}"
-}
-
 output "zone_rt_id" {
   description = "A map containing the route table id per availability zone"
   value       = "${zipmap(aws_subnet.nat_subnets.*.availability_zone, aws_route_table.az_rts.*.id)}"

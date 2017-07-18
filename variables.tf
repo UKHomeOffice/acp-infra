@@ -9,6 +9,7 @@ variable "environment" {
 
 variable "dns_zone" {
   description = "The route53 hosting zone for this cluster"
+  default     = ""
 }
 
 variable "tags" {
