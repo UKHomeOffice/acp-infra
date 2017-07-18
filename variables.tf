@@ -4,7 +4,11 @@ variable "vpc_cidr" {
 }
 
 variable "environment" {
-  description = "The unique environment being created e.g. dev, production etc."
+  description = "The unique environment being created e.g. dev, production etc"
+}
+
+variable "dns_zone" {
+  description = "The route53 hosting zone for this cluster"
 }
 
 variable "tags" {

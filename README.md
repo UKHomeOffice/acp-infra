@@ -4,6 +4,7 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | cloudtrail_bucket | A bucket to push the cloudtrail events to | string | `` | no |
+| dns_zone | The route53 hosting zone for this cluster. | string | - | yes |
 | elb_subnet_offset | The network offset for the ELB subnets | string | `20` | no |
 | environment | The unique environment being created e.g. dev, production etc. | string | - | yes |
 | nat_gateway | Indicates if you wish to create a NAT gatewaes or not | string | `true` | no |
@@ -18,6 +19,7 @@
 | Name | Description |
 |------|-------------|
 | default_rt_id | The ID for the default routing table, with IGW attached |
+| dns_zone_id | The route53 zone id for the cluster |
 | elb_cidr | A map containing the availability zone to ELB network CIDR i.e. eu-west-1a -> 10.200.10.0/24 |
 | elb_subnets | A map containing the subnet id's for the ELB subnets |
 | nat_cidr | A map containing the availability zone to NAT network CIDR i.e. eu-west-1a -> 10.200.10.0/24 |
