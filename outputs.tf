@@ -51,3 +51,8 @@ output "nat_gateway_public_ips" {
   description = "A list of the NAT gateway EIP public addresses"
   value       = [ "${aws_nat_gateway.nat_gws.*.public_ip}" ]
 }
+
+output "dns_zone" {
+  description = "The DNS for this cluster"
+  value       = "${var.dns_zone}"
+}
