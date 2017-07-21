@@ -1,4 +1,3 @@
-
 # Provider will inherit from environment variables
 provider "aws" {}
 
@@ -6,13 +5,13 @@ provider "aws" {}
 resource "aws_route53_zone" "zone" {
   count = "${var.dns_zone == "" ? 0 : 1}"
 
-  name  = "${var.dns_zone}"
-  tags  = "${merge(var.tags, map("Name", var.environment), map("Env", var.environment), map("KubernetesCluster", var.environment))}"
+  name = "${var.dns_zone}"
+  tags = "${merge(var.tags, map("Name", var.environment), map("Env", var.environment), map("KubernetesCluster", var.environment))}"
 }
 
 # Create the VPC
 resource "aws_vpc" "main" {
   cidr_block = "${var.vpc_cidr}"
 
-  tags       = "${merge(var.tags, map("Name", var.environment), map("Env", var.environment), map("KubernetesCluster", var.environment))}"
+  tags = "${merge(var.tags, map("Name", var.environment), map("Env", var.environment), map("KubernetesCluster", var.environment))}"
 }
