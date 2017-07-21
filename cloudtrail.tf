@@ -1,4 +1,3 @@
-
 # Create cloudtrail logging if bucket is specified
 resource "aws_cloudtrail" "cloudtrail" {
   count                         = "${var.cloudtrail_bucket != "" ? 1 : 0}"

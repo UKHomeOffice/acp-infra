@@ -1,4 +1,3 @@
-
 # Create the NAT subnets where the managed NAT gateways live
 resource "aws_subnet" "nat_subnets" {
   count             = "${var.nat_gateway ? length(var.zones) : 0}"
