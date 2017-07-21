@@ -7,6 +7,11 @@ output "vpc_id" {
   value       = "${aws_vpc.main.id}"
 }
 
+output "environment" {
+  description = "The environment name for this cluster"
+  value       = "${var.environment}"
+}
+
 output "default_rt_id" {
   description = "The ID for the default routing table, with IGW attached"
   value       = "${aws_route_table.default.id}"
