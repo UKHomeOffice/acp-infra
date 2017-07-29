@@ -61,3 +61,13 @@ output "dns_zone" {
   description = "The DNS for this cluster"
   value       = "${var.dns_zone}"
 }
+
+output "compute_sg" {
+  description = "The default security group created for the compute nodes"
+  value       = "${aws_security_group.compute.id}"
+}
+
+output "master_sg" {
+  description = "The default security group created for the master nodes"
+  value       = "${aws_security_group.master.id}"
+}

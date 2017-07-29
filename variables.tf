@@ -27,6 +27,11 @@ variable "zones" {
   type        = "list"
 }
 
+variable "create_zone" {
+  description = "Indicates you want this module to create the hosting domain for you"
+  default     = true
+}
+
 variable "cloudtrail_bucket" {
   description = "A bucket to push the cloudtrail events to"
   default     = ""
@@ -45,4 +50,14 @@ variable "elb_subnet_offset" {
 variable "nat_subnet_offset" {
   description = "The network offset for the NAT subnets"
   default     = "30"
+}
+
+variable "compute_sg_name" {
+  description = "The name of the security group for the compute nodes"
+  default     = "nodes-staged"
+}
+
+variable "master_sg_name" {
+  description = "The name of the security group for the master nodes"
+  default     = "masters-staged"
 }
