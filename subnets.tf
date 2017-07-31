@@ -5,12 +5,12 @@ resource "aws_subnet" "nat_subnets" {
   availability_zone = "${var.zones[count.index]}"
   cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.network_mask, count.index + var.nat_subnet_offset)}"
 
-  tags {
-    Env               = "${var.environment}"
-    Role              = "nat-subnets"
-    Name              = "${var.environment}-nat-az${count.index}"
-    KubernetesCluster = "${var.environment}"
-  }
+  tags = "${merge(var.tags,
+    map("Name", format("nat-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
+    map("Env", var.environment),
+    map("Role", "nat-subnets"),
+    map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
+    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
 }
 
 # Associate the NAT subnets with the default routing table
@@ -27,14 +27,13 @@ resource "aws_subnet" "elb_subnets" {
   availability_zone = "${var.zones[count.index]}"
   cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.network_mask, count.index + var.elb_subnet_offset)}"
 
-  tags {
-    Env                               = "${var.environment}"
-    Role                              = "elb-subnets"
-    Name                              = "${var.environment}-elb-az${count.index}"
-    KubernetesCluster                 = "${var.environment}"
-    "kubernetes.io/role/internal-elb" = "true"
-    "kubernetes.io/role/elb"          = "true"
-  }
+  tags = "${merge(var.tags,
+    map("Name", format("elb-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
+    map("Env", var.environment),
+    map("Role", "elb-subnets"),
+    map("kubernetes.io/role/internal-elb", "true" , "kubernetes.io/role/elb", "true"),
+    map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
+    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
 }
 
 # Associate the ELB subnets with default routing table

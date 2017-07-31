@@ -7,10 +7,9 @@ resource "aws_iam_group" "read_only_group" {
   name = "acp-ro-${var.environment}"
 }
 
-resource "aws_iam_policy_attachment" "attach_read_only" {
-  name       = "acp-ro-attachment-${var.environment}"
+resource "aws_iam_group_policy_attachment" "attach_read_only_policy" {
+  group      = "${aws_iam_group.read_only_group.name}"
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
-  groups     = ["${aws_iam_group.read_only_group.name}"]
 }
 
 resource "aws_iam_group_membership" "read_only_group_membership" {
@@ -28,10 +27,9 @@ resource "aws_iam_group" "admin_group" {
   name = "acp-admin-${var.environment}"
 }
 
-resource "aws_iam_policy_attachment" "attach_admin" {
-  name       = "acp-admin-attachment-${var.environment}"
+resource "aws_iam_group_policy_attachment" "attach_admin_policy" {
+  group      = "${aws_iam_group.admin_group.name}"
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
-  groups     = ["${aws_iam_group.admin_group.name}"]
 }
 
 resource "aws_iam_group_membership" "admin_group_membership" {

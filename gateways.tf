@@ -2,10 +2,9 @@
 resource "aws_internet_gateway" "main" {
   vpc_id = "${aws_vpc.main.id}"
 
-  tags {
-    Env  = "${var.environment}"
-    Name = "${var.environment}-igw"
-  }
+  tags = "${merge(var.tags,
+    map("Name", format("%s.%s", var.environment, var.dns_zone)),
+    map("Env", var.environment, "Role", "internet-gateway"))}"
 }
 
 # Create the EIP for the NAT Gateways
