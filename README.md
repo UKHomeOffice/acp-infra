@@ -9,6 +9,7 @@
 | dns_zone | The route53 hosting zone for this cluster | `` | no |
 | elb_subnet_offset | The network offset for the ELB subnets | `20` | no |
 | environment | The unique environment being created e.g. dev, production etc | - | yes |
+| kops_state_bucket | The name of the state bucket to use for kops | `` | no |
 | master_sg_name | The name of the security group for the master nodes | `masters-staged` | no |
 | nat_gateway | Indicates if you wish to create a NAT gatewaes or not | `true` | no |
 | nat_subnet_offset | The network offset for the NAT subnets | `30` | no |
