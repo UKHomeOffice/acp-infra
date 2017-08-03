@@ -61,3 +61,8 @@ variable "master_sg_name" {
   description = "The name of the security group for the master nodes"
   default     = "masters-staged"
 }
+
+variable "kops_state_bucket" {
+  description = "The name of the state bucket to use for kops"
+  default     = ""
+}
