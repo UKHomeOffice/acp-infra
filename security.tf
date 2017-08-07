@@ -5,9 +5,7 @@ resource "aws_security_group" "compute" {
 
   tags = "${merge(var.tags,
     map("Name", format("%s.%s", var.compute_sg_name, var.dns_zone)),
-    map("Env", var.environment),
-    map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
-    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
+    map("Env", var.environment))}"
 }
 
 ## The default master security group for master nodes
@@ -17,9 +15,7 @@ resource "aws_security_group" "master" {
 
   tags = "${merge(var.tags,
     map("Name", format("%s.%s", var.master_sg_name, var.dns_zone)),
-    map("Env", var.environment),
-    map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
-    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
+    map("Env", var.environment))}"
 }
 
 # Permit all traffic internal to the master subnet
