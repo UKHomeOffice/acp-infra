@@ -54,12 +54,12 @@ variable "nat_subnet_offset" {
 
 variable "compute_sg_name" {
   description = "The name of the security group for the compute nodes"
-  default     = "nodes-staged"
+  default     = "compute-addon"
 }
 
 variable "master_sg_name" {
   description = "The name of the security group for the master nodes"
-  default     = "masters-staged"
+  default     = "masters-addon"
 }
 
 variable "kops_state_bucket" {
