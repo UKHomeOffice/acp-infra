@@ -66,3 +66,8 @@ variable "kops_state_bucket" {
   description = "The name of the state bucket to use for kops"
   default     = ""
 }
+
+variable "terraform_lock_table" {
+  description = "The terraform bucket name used for state"
+  default     = ""
+}

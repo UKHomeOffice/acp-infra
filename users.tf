@@ -13,6 +13,67 @@ resource "aws_iam_group_policy_attachment" "attach_read_only_policy" {
   policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
 }
 
+# Allow kops access to it's bucket for audit / dry-run
+data "aws_iam_policy_document" "cluster_dryrun_policy_doc" {
+  statement {
+    actions = [
+      "s3:*",
+    ]
+
+    resources = [
+      "arn:aws:s3:::${var.kops_state_bucket}/*",
+    ]
+  }
+}
+
+# Policy to allow access to audit potential changes to a cluster
+resource "aws_iam_policy" "cluster_dryrun_policy" {
+  count = "${var.kops_state_bucket != "" ? 1 : 0}"
+
+  name        = "acp-cluster-dryrun-${var.environment}"
+  description = "Allow cluster (kops) --dry-run"
+
+  policy = "${data.aws_iam_policy_document.cluster_dryrun_policy_doc.json}"
+}
+
+# Assign the cluster '--dry-run' permiisions to the read only user
+resource "aws_iam_group_policy_attachment" "attach_kops_bucket_access" {
+  count = "${var.kops_state_bucket != "" ? 1 : 0}"
+
+  group      = "${aws_iam_group.read_only_group.name}"
+  policy_arn = "${aws_iam_policy.cluster_dryrun_policy.arn}"
+}
+
+# Allow access for terraform to create a lock when auditing
+data "aws_iam_policy_document" "terraform_plan_policy_doc" {
+  statement {
+    actions = [
+      "dynamodb:*",
+    ]
+
+    resources = [
+      "arn:aws:dynamodb:::table/${var.terraform_lock_table}",
+    ]
+  }
+}
+
+# Policy to allow access to audit potential changes to terraform infra (plan)
+resource "aws_iam_policy" "terraform_plan_permissions" {
+  count = "${var.terraform_lock_table != "" ? 1 : 0}"
+
+  name        = "acp-terraform-plan-${var.environment}"
+  description = "Allow terraform plan"
+  policy      = "${data.aws_iam_policy_document.terraform_plan_policy_doc.json}"
+}
+
+# Assign access to run terraform plan to the read only user group
+resource "aws_iam_group_policy_attachment" "attach_kops_dynamodb_table" {
+  count = "${var.terraform_lock_table != "" ? 1 : 0}"
+
+  group      = "${aws_iam_group.read_only_group.name}"
+  policy_arn = "${aws_iam_policy.terraform_plan_permissions.arn}"
+}
+
 resource "aws_iam_group_membership" "read_only_group_membership" {
   name  = "acp-ro-group-membership-${var.environment}"
   group = "${aws_iam_group.read_only_group.name}"
