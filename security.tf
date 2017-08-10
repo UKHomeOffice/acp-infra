@@ -28,7 +28,7 @@ resource "aws_security_group_rule" "master_all_allow" {
   self              = true
 }
 
-# permit all outbound traffic from subnet
+# Permit all outbound traffic from subnet
 resource "aws_security_group_rule" "master_all_allow_outbound" {
   type              = "egress"
   security_group_id = "${aws_security_group.master.id}"
@@ -48,7 +48,7 @@ resource "aws_security_group_rule" "compute_all_allow" {
   self              = true
 }
 
-# permit all outbound traffic from subnet
+# Permit all outbound traffic from subnet
 resource "aws_security_group_rule" "compute_all_allow_outbound" {
   type              = "egress"
   security_group_id = "${aws_security_group.compute.id}"
