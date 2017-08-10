@@ -62,12 +62,7 @@ output "dns_zone" {
   value       = "${var.dns_zone}"
 }
 
-output "compute_sg" {
-  description = "The default security group created for the compute nodes"
-  value       = "${aws_security_group.compute.id}"
-}
-
-output "master_sg" {
-  description = "The default security group created for the master nodes"
-  value       = "${aws_security_group.master.id}"
+output "ingress_sg" {
+  description = "The default security group created for the ingress nodes"
+  value       = "${aws_security_group.ingress.id}"
 }
