@@ -3,6 +3,7 @@
 
 | Name | Description | Default | Required |
 |------|-------------|:-----:|:-----:|
+| allow_teardown | Will enable the teardown of resources for testing environemnt | `false` | no |
 | cloudtrail_bucket | A bucket to push the cloudtrail events to | `` | no |
 | create_zone | Indicates you want this module to create the hosting domain for you | `true` | no |
 | dns_zone | The route53 hosting zone for this cluster | `` | no |

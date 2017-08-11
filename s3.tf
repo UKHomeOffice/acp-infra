@@ -8,6 +8,8 @@ resource "aws_s3_bucket" "kops_bucket" {
     map("Name", format("%s.%s", var.environment, var.dns_zone)),
     map("Env", var.environment, "Role", "kops-bucket"))}"
 
+  force_destroy = "${var.allow_teardown}"
+
   versioning {
     enabled = true
   }
