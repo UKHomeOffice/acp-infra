@@ -1,3 +1,8 @@
+variable "allow_teardown" {
+  description = "Will enable the teardown of resources for testing environemnt"
+  default     = false
+}
+
 variable "vpc_cidr" {
   description = "The CIRDR network block"
   default     = "10.111.0.0/16"

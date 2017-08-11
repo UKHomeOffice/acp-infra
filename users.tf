@@ -1,6 +1,7 @@
 ## Create a readonly user
 resource "aws_iam_user" "read_only_user" {
-  name = "acp-ro-${var.environment}"
+  name          = "acp-ro-${var.environment}"
+  force_destroy = "${var.allow_teardown}"
 }
 
 resource "aws_iam_group" "read_only_group" {
@@ -20,7 +21,8 @@ resource "aws_iam_group_membership" "read_only_group_membership" {
 
 # Create an admin user
 resource "aws_iam_user" "admin_user" {
-  name = "acp-admin-${var.environment}"
+  name          = "acp-admin-${var.environment}"
+  force_destroy = "${var.allow_teardown}"
 }
 
 resource "aws_iam_group" "admin_group" {
@@ -40,7 +42,8 @@ resource "aws_iam_group_membership" "admin_group_membership" {
 
 # Create a platform-services user
 resource "aws_iam_user" "platform_services_user" {
-  name = "acp-platform-services-${var.environment}"
+  name          = "acp-platform-services-${var.environment}"
+  force_destroy = "${var.allow_teardown}"
 }
 
 resource "aws_iam_group" "platform_services_group" {
