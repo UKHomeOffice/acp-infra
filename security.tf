@@ -2,6 +2,7 @@
 resource "aws_security_group" "ingress" {
   name        = "${var.environment}-ingress-sg"
   description = "The default security group for ingress nodes in environment: ${var.environment}"
+  vpc_id      = "${aws_vpc.main.id}"
 
   tags = "${merge(var.tags,
     map("Name", format("%s.%s", var.ingress_sg_name, var.dns_zone)),
