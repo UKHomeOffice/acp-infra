@@ -90,6 +90,22 @@ resource "aws_iam_group" "admin_group" {
   name = "acp-admin-${var.environment}"
 }
 
+data "aws_iam_policy_document" "platform_services_policy" {
+  statement {
+    actions = [
+      "rds:*",
+      "s3:*",
+      "elasticloadbalancing:*",
+    ]
+
+    resources = [
+      "*",
+    ]
+
+    effect = "Allow"
+  }
+}
+
 resource "aws_iam_group_policy_attachment" "attach_admin_policy" {
   group      = "${aws_iam_group.admin_group.name}"
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
