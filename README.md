@@ -15,7 +15,7 @@
 | nat_subnet_offset | The network offset for the NAT subnets | `30` | no |
 | network_mask | The network mask used to calculate the ELB and NAT subnets | `8` | no |
 | tags | A set of tags applied to the vpc being created | `<map>` | no |
-| terraform_lock_table | The terraform bucket name used for state | - | yes |
+| terraform_lock_table | The terraform bucket name used for state | `` | no |
 | vpc_cidr | The CIRDR network block | `10.111.0.0/16` | no |
 | zones | A collection of availability zones to build in | - | yes |
 
