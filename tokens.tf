@@ -16,6 +16,15 @@ data "aws_iam_policy_document" "assets_policy" {
   }
 }
 
+# Policy to allow access to the assets bucket
+resource "aws_iam_policy" "assets_policy" {
+  count = "${var.kops_state_bucket != "" ? 1 : 0}"
+
+  name        = "acp-assets-${var.environment}"
+  description = "Policy to manage the assets for the cluster in environment: ${var.environment}"
+  policy      = "${data.aws_iam_policy_document.assets_policy.json}"
+}
+
 # This IAM group is to manage permissions for the assets user
 resource "aws_iam_group" "assets_users_group" {
   count = "${var.kops_state_bucket != "" ? 1 : 0}"
@@ -27,8 +36,8 @@ resource "aws_iam_group" "assets_users_group" {
 resource "aws_iam_group_policy_attachment" "attach_assets_policy" {
   count = "${var.kops_state_bucket != "" ? 1 : 0}"
 
-  group  = "${aws_iam_group.assets_users_group.name}"
-  policy = "${data.aws_iam_policy_document.assets_policy.json}"
+  group      = "${aws_iam_group.assets_users_group.name}"
+  policy_arn = "${aws_iam_policy.assets_policy.arn}"
 }
 
 # This user is used by the platform hub to manage the assets (tokens really, but i want to be generic)
