@@ -1,3 +1,9 @@
+data "aws_region" "current" {
+  current = true
+}
+
+data "aws_caller_identity" "current" {}
+
 ## Create a readonly user
 resource "aws_iam_user" "read_only_user" {
   name          = "acp-ro-${var.environment}"
@@ -52,7 +58,7 @@ data "aws_iam_policy_document" "terraform_plan_policy_doc" {
     ]
 
     resources = [
-      "arn:aws:dynamodb:::table/${var.terraform_lock_table}",
+      "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${var.terraform_lock_table}",
     ]
   }
 }
