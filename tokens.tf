@@ -27,8 +27,8 @@ resource "aws_iam_group" "assets_users_group" {
 resource "aws_iam_group_policy_attachment" "attach_assets_policy" {
   count = "${var.kops_state_bucket != "" ? 1 : 0}"
 
-  group      = "${aws_iam_group.assets_users_group.name}"
-  policy_arn = "${data.aws_iam_policy_document.assets_policy.json}"
+  group  = "${aws_iam_group.assets_users_group.name}"
+  policy = "${data.aws_iam_policy_document.assets_policy.json}"
 }
 
 # This user is used by the platform hub to manage the assets (tokens really, but i want to be generic)
