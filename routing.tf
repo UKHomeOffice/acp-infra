@@ -2,16 +2,18 @@
 resource "aws_route_table" "default" {
   vpc_id = "${aws_vpc.main.id}"
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "${aws_internet_gateway.main.id}"
-  }
-
   tags {
     Env               = "${var.environment}"
     Name              = "${var.environment}-default-rt"
     KubernetesCluster = "${var.environment}"
   }
+}
+
+## Add the default route to internet gateway
+resource "aws_route" "default_gateway_route" {
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = "${aws_internet_gateway.main.id}"
+  route_table_id         = "${aws_route_table.default.id}"
 }
 
 ## Add the route for internet gateway
