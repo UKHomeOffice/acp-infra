@@ -16,9 +16,24 @@ resource "aws_route53_zone" "zone" {
     map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
 }
 
-# Create the VPC
+## Create the VPC
 resource "aws_vpc" "main" {
   cidr_block = "${var.vpc_cidr}"
+
+  tags = "${merge(var.tags,
+    map("Name", format("%s.%s", var.environment, var.dns_zone)),
+    map("Env", var.environment),
+    map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
+    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
+}
+
+## Create a KMS key for this environment
+resource "aws_kms_key" "kms" {
+  count = "${var.create_kms ? 1 : 0}"
+
+  deletion_window_in_days = "${var.kms_deletion_window}"
+  description             = "The managed KMS for cluster: ${var.environment}.${var.dns_zone}"
+  enable_key_rotation     = "${var.enable_kms_rotation}"
 
   tags = "${merge(var.tags,
     map("Name", format("%s.%s", var.environment, var.dns_zone)),

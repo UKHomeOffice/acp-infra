@@ -66,3 +66,8 @@ output "ingress_sg" {
   description = "The default security group created for the ingress nodes"
   value       = "${aws_security_group.ingress.id}"
 }
+
+output "kms_id" {
+  description = "If enabled this is the ID of the managed KMS key for the cluster"
+  value       = "${aws_kms_key.kms.id}"
+}
