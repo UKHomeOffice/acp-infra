@@ -37,6 +37,21 @@ variable "create_zone" {
   default     = true
 }
 
+variable "create_kms" {
+  description = "Indicates you wish to enable a managed kms key for this cluster"
+  default     = false
+}
+
+variable "enable_kms_rotation" {
+  description = "If create_kms is enabled you can control key rotation from here"
+  default     = false
+}
+
+variable "kms_deletion_window" {
+  description = "The number of days for the KMS will stay post deletion"
+  default     = "30"
+}
+
 variable "cloudtrail_bucket" {
   description = "A bucket to push the cloudtrail events to"
   default     = ""
