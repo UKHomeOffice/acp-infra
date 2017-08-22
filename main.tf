@@ -46,6 +46,6 @@ resource "aws_kms_key" "kms" {
 resource "aws_kms_alias" "alias" {
   count = "${var.create_kms ? 1 : 0}"
 
-  name          = "alias/${var.environment}.${var.dns_zone}"
+  name          = "alias/${var.environment}"
   target_key_id = "${aws_kms_key.kms.key_id}"
 }
