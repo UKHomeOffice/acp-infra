@@ -41,3 +41,11 @@ resource "aws_kms_key" "kms" {
     map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
     map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
 }
+
+## Create the KMS Alias for the above key
+resource "aws_kms_alias" "alias" {
+  count = "${var.create_kms ? 1 : 0}"
+
+  name          = "alias/${var.environment}.${var.dns_zone}"
+  target_key_id = "${aws_kms_key.kms.key_id}"
+}

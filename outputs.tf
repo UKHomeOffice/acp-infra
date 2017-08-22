@@ -69,5 +69,5 @@ output "ingress_sg" {
 
 output "kms_id" {
   description = "If enabled this is the ID of the managed KMS key for the cluster"
-  value       = "${aws_kms_key.kms.id}"
+  value       = "${aws_kms_key.kms.key_id}"
 }
