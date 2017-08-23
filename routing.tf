@@ -18,8 +18,6 @@ resource "aws_route" "default_gateway_route" {
 
 ## Add the route for internet gateway
 resource "aws_route" "default_igw" {
-  depends_on = ["aws_route_table.default"]
-
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = "${aws_internet_gateway.main.id}"
   route_table_id         = "${aws_route_table.default.id}"
