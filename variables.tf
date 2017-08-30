@@ -57,8 +57,13 @@ variable "cloudtrail_bucket" {
   default     = ""
 }
 
-variable "network_mask" {
-  description = "The network mask used to calculate the ELB and NAT subnets"
+variable "elb_netmask_offset" {
+  description = "The network mask used to calculate the ELB subnets"
+  default     = 8
+}
+
+variable "nat_netmask_offset" {
+  description = "The network mask used to calculate the NAT subnets"
   default     = 8
 }
 
