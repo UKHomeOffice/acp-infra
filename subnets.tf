@@ -3,7 +3,7 @@ resource "aws_subnet" "nat_subnets" {
   count             = "${var.nat_gateway ? length(var.zones) : 0}"
   vpc_id            = "${aws_vpc.main.id}"
   availability_zone = "${var.zones[count.index]}"
-  cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.network_mask, count.index + var.nat_subnet_offset)}"
+  cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.nat_netmask_offset, count.index + var.nat_subnet_offset)}"
 
   tags = "${merge(var.tags,
     map("Name", format("nat-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
@@ -25,7 +25,7 @@ resource "aws_subnet" "elb_subnets" {
   count             = "${length(var.zones)}"
   vpc_id            = "${aws_vpc.main.id}"
   availability_zone = "${var.zones[count.index]}"
-  cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.network_mask, count.index + var.elb_subnet_offset)}"
+  cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.elb_netmask_offset, count.index + var.elb_subnet_offset)}"
 
   tags = "${merge(var.tags,
     map("Name", format("elb-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),

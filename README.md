@@ -8,6 +8,7 @@
 | create_kms | Indicates you wish to enable a managed kms key for this cluster | `false` | no |
 | create_zone | Indicates you want this module to create the hosting domain for you | `true` | no |
 | dns_zone | The route53 hosting zone for this cluster | `` | no |
+| elb_netmask_offset | The network mask used to calculate the ELB subnets | `8` | no |
 | elb_subnet_offset | The network offset for the ELB subnets | `20` | no |
 | enable_kms_rotation | If create_kms is enabled you can control key rotation from here | `false` | no |
 | environment | The unique environment being created e.g. dev, production etc | - | yes |
@@ -15,8 +16,8 @@
 | kms_deletion_window | The number of days for the KMS will stay post deletion | `30` | no |
 | kops_state_bucket | The name of the state bucket to use for kops | `` | no |
 | nat_gateway | Indicates if you wish to create a NAT gatewaes or not | `true` | no |
+| nat_netmask_offset | The network mask used to calculate the NAT subnets | `8` | no |
 | nat_subnet_offset | The network offset for the NAT subnets | `30` | no |
-| network_mask | The network mask used to calculate the ELB and NAT subnets | `8` | no |
 | tags | A set of tags applied to the vpc being created | `<map>` | no |
 | terraform_lock_table | The terraform bucket name used for state | `` | no |
 | vpc_cidr | The CIRDR network block | `10.111.0.0/16` | no |
