@@ -59,22 +59,22 @@ variable "cloudtrail_bucket" {
 
 variable "elb_netmask_offset" {
   description = "The network mask used to calculate the ELB subnets"
-  default     = 8
-}
-
-variable "nat_netmask_offset" {
-  description = "The network mask used to calculate the NAT subnets"
-  default     = 8
+  default     = "4"
 }
 
 variable "elb_subnet_offset" {
   description = "The network offset for the ELB subnets"
-  default     = "20"
+  default     = "2"
+}
+
+variable "nat_netmask_offset" {
+  description = "The network mask used to calculate the NAT subnets"
+  default     = "5"
 }
 
 variable "nat_subnet_offset" {
   description = "The network offset for the NAT subnets"
-  default     = "30"
+  default     = "0"
 }
 
 variable "ingress_sg_name" {
