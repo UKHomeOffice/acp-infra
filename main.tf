@@ -13,7 +13,7 @@ resource "aws_route53_zone" "zone" {
     map("Name", format("%s.%s", var.environment, var.dns_zone)),
     map("Env", var.environment),
     map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
-    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
+    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), var.ownership))}"
 }
 
 ## Create the VPC
@@ -25,7 +25,7 @@ resource "aws_vpc" "main" {
     map("Name", format("%s.%s", var.environment, var.dns_zone)),
     map("Env", var.environment),
     map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
-    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
+    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), var.ownership))}"
 }
 
 ## Create a KMS key for this environment
@@ -40,7 +40,7 @@ resource "aws_kms_key" "kms" {
     map("Name", format("%s.%s", var.environment, var.dns_zone)),
     map("Env", var.environment),
     map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
-    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
+    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), var.ownership))}"
 }
 
 ## Create the KMS Alias for the above key

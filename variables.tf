@@ -77,6 +77,11 @@ variable "nat_subnet_offset" {
   default     = "0"
 }
 
+variable "ownership" {
+  description = "The kubernetes ownership tag on the aws resources i.e. shared or owned"
+  default     = "shared"
+}
+
 variable "ingress_sg_name" {
   description = "The name of the security group for the ingress nodes"
   default     = "ingress-additional"
