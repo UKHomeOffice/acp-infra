@@ -82,6 +82,11 @@ variable "ingress_sg_name" {
   default     = "ingress-additional"
 }
 
+variable "sysdig_sg_name" {
+  description = "The name of the security group for the sysdig nodes"
+  default     = "sysdig-additional"
+}
+
 variable "kops_state_bucket" {
   description = "The name of the state bucket to use for kops"
   default     = ""
