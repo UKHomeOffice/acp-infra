@@ -38,8 +38,8 @@ resource "aws_route_table" "az_rts" {
 ## Add the route for the zone tables
 resource "aws_route" "zone_routes" {
   count      = "${var.nat_gateway ? length(var.zones) : 0}"
-  depends_on = ["aws_route_table.az_rts"]
 
+  depends_on             = ["aws_nat_gateway.nat_gws", "aws_route_table.az_rts" ]
   destination_cidr_block = "0.0.0.0/0"
   nat_gateway_id         = "${element(aws_nat_gateway.nat_gws.*.id, count.index)}"
   route_table_id         = "${element(aws_route_table.az_rts.*.id, count.index)}"
