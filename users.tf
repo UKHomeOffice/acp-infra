@@ -148,3 +148,24 @@ resource "aws_iam_group_membership" "platform_services_group_membership" {
   group = "${aws_iam_group.platform_services_group.name}"
   users = ["${aws_iam_user.platform_services_user.name}"]
 }
+
+# Create a read-only user for Sysdig
+resource "aws_iam_user" "read_only_sysdig_user" {
+  name          = "acp-ro-${var.environment}-sysdig"
+  force_destroy = "${var.allow_teardown}"
+}
+
+resource "aws_iam_group" "read_only_sysdig_group" {
+  name = "acp-ro-${var.environment}-sysdig"
+}
+
+resource "aws_iam_group_policy_attachment" "attach_read_only_sysdig_policy" {
+  group      = "${aws_iam_group.read_only_sysdig_group.name}"
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
+
+resource "aws_iam_group_membership" "read_only_sysdig_group_membership" {
+  name  = "acp-ro-sysdig-group-membership-${var.environment}"
+  group = "${aws_iam_group.read_only_sysdig_group.name}"
+  users = ["${aws_iam_user.read_only_sysdig_user.name}"]
+}
