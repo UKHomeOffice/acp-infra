@@ -50,7 +50,7 @@ resource "aws_iam_group_policy_attachment" "attach_kops_bucket_access" {
   policy_arn = "${aws_iam_policy.cluster_dryrun_policy.arn}"
 }
 
-# Allow access for terraform to create a lock when auditing
+# Allow access for terraform to create a lock when auditing and decrypt secrets
 data "aws_iam_policy_document" "terraform_plan_policy_doc" {
   statement {
     actions = [
@@ -59,6 +59,19 @@ data "aws_iam_policy_document" "terraform_plan_policy_doc" {
 
     resources = [
       "arn:aws:dynamodb:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:table/${var.terraform_lock_table}",
+    ]
+  }
+
+  statement {
+    actions = [
+      "kms:Decrypt",
+      "kms:Encrypt",
+      "kms:Get*",
+      "kms:List*",
+    ]
+
+    resources = [
+      "*",
     ]
   }
 }
