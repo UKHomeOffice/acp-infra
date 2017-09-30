@@ -20,4 +20,9 @@ resource "aws_nat_gateway" "nat_gws" {
   count         = "${var.nat_gateway ? length(var.zones) : 0}"
   allocation_id = "${element(aws_eip.nat_ips.*.id, count.index)}"
   subnet_id     = "${element(aws_subnet.nat_subnets.*.id, count.index)}"
+
+  tags = "${merge(var.tags,
+    map("Name", format("%s.%s.%s", element(aws_subnet.nat_subnets.*.availability_zone, count.index), var.environment, var.dns_zone)),
+    map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
+    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "owned"))}"
 }
