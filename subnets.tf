@@ -10,7 +10,7 @@ resource "aws_subnet" "nat_subnets" {
     map("Env", var.environment),
     map("Role", "nat-subnets"),
     map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
-    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
+    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "owned"))}"
 }
 
 # Associate the NAT subnets with the default routing table
@@ -33,7 +33,7 @@ resource "aws_subnet" "elb_subnets" {
     map("Role", "elb-subnets"),
     map("kubernetes.io/role/internal-elb", "true" , "kubernetes.io/role/elb", "true"),
     map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
-    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
+    map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "owned"))}"
 }
 
 # Associate the ELB subnets with default routing table
