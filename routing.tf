@@ -16,16 +16,9 @@ resource "aws_route" "default_gateway_route" {
   route_table_id         = "${aws_route_table.default.id}"
 }
 
-## Add the route for internet gateway
-resource "aws_route" "default_igw" {
-  destination_cidr_block = "0.0.0.0/0"
-  gateway_id             = "${aws_internet_gateway.main.id}"
-  route_table_id         = "${aws_route_table.default.id}"
-}
-
 ## Availability Zone Routing Tables
 resource "aws_route_table" "az_rts" {
-  count  = "${var.nat_gateway ? length(var.zones) : 0}"
+  count  = "${var.create_zone_rt ? length(var.zones) : 0}"
   vpc_id = "${aws_vpc.main.id}"
 
   tags {
