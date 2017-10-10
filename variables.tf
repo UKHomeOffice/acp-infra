@@ -23,7 +23,12 @@ variable "tags" {
 }
 
 variable "nat_gateway" {
-  description = "Indicates if you wish to create a NAT gatewaes or not"
+  description = "Indicates if you wish to create a NAT gateways or not"
+  default     = true
+}
+
+variable "create_zone_rt" {
+  description = "Indicates if you wish to create a route table for the AZs (should be true if nat_gateway is true)"
   default     = true
 }
 
