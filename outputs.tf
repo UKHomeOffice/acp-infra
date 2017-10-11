@@ -34,7 +34,7 @@ output "dns_zone_id" {
 
 output "zone_rt_id" {
   description = "A map containing the route table id per availability zone"
-  value       = "${zipmap(aws_subnet.nat_subnets.*.availability_zone, aws_route_table.az_rts.*.id)}"
+  value       = "${zipmap(var.zones, aws_route_table.az_rts.*.id)}"
 }
 
 output "elb_cidr" {
