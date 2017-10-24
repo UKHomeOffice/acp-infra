@@ -4,7 +4,7 @@ resource "aws_route_table" "default" {
 
   tags {
     Env               = "${var.environment}"
-    Name              = "${var.environment}-default-rt"
+    Name              = "${var.environment}.${var.dns_zone}"
     KubernetesCluster = "${var.environment}"
   }
 }
@@ -23,7 +23,7 @@ resource "aws_route_table" "az_rts" {
 
   tags {
     Env               = "${var.environment}"
-    Name              = "${var.environment}-rt-az${count.index}"
+    Name              = "private-${element(var.zones, count.index)}.${var.environment}.${var.dns_zone}"
     KubernetesCluster = "${var.environment}"
   }
 }
