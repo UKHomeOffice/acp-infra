@@ -4,7 +4,8 @@ resource "aws_internet_gateway" "main" {
 
   tags = "${merge(var.tags,
     map("Name", format("%s.%s", var.environment, var.dns_zone)),
-    map("Env", format("%s.%s", var.environment, var.dns_zone), "Role", "internet-gateway"))}"
+    map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
+    map("Env", var.environment), "Role", "internet-gateway"))}"
 }
 
 # Create the EIP for the NAT Gateways
