@@ -6,7 +6,7 @@ resource "aws_subnet" "nat_subnets" {
   cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.nat_netmask_offset, count.index + var.nat_subnet_offset)}"
 
   tags = "${merge(var.tags,
-    map("Name", format("public-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
+    map("Name", format("nat-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
     map("Env", var.environment),
     map("Role", "public-subnets"),
     map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
@@ -28,7 +28,7 @@ resource "aws_subnet" "elb_subnets" {
   cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.elb_netmask_offset, count.index + var.elb_subnet_offset)}"
 
   tags = "${merge(var.tags,
-    map("Name", format("elb-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
+    map("Name", format("public-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
     map("Env", var.environment),
     map("Role", "elb-subnets"),
     map("kubernetes.io/role/internal-elb", "true" , "kubernetes.io/role/elb", "true"),
