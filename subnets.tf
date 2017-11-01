@@ -6,9 +6,9 @@ resource "aws_subnet" "nat_subnets" {
   cidr_block        = "${cidrsubnet(aws_vpc.main.cidr_block, var.nat_netmask_offset, count.index + var.nat_subnet_offset)}"
 
   tags = "${merge(var.tags,
-    map("Name", format("nat-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
+    map("Name", format("public-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
     map("Env", var.environment),
-    map("Role", "nat-subnets"),
+    map("Role", "public-subnets"),
     map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
     map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "owned"))}"
 }
