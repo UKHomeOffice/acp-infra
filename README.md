@@ -36,6 +36,7 @@
 | environment |  |
 | ingress_sg |  |
 | kms_id |  |
+| kops_logs_bucket |  |
 | nat_cidr |  |
 | nat_gateway_private_ips |  |
 | nat_gateway_public_ips |  |
