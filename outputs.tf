@@ -29,7 +29,7 @@ output "nat_subnets" {
 
 output "dns_zone_id" {
   description = "The route53 zone id for the cluster"
-  value       = "${aws_route53_zone.zone.id}"
+  value       = "${aws_route53_zone.zone.*.id}"
 }
 
 output "zone_rt_id" {
@@ -69,10 +69,10 @@ output "ingress_sg" {
 
 output "kms_id" {
   description = "If enabled this is the ID of the managed KMS key for the cluster"
-  value       = "${aws_kms_key.kms.key_id}"
+  value       = "${aws_kms_key.kms.*.key_id}"
 }
 
 output "kops_logs_bucket" {
   description = "If enabled this is the name of the s3 bucket storing access logs for the kops state bucket"
-  value       = "${aws_s3_bucket.kops_logs_bucket.id}"
+  value       = "${aws_s3_bucket.kops_logs_bucket.*.id}"
 }
