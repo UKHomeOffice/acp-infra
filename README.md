@@ -15,7 +15,6 @@
 | environment | The unique environment being created e.g. dev, production etc | - | yes |
 | ingress_sg_name | The name of the security group for the ingress nodes | `ingress-additional` | no |
 | kms_deletion_window | The number of days for the KMS will stay post deletion | `30` | no |
-| kops_state_bucket | The name of the state bucket to use for kops | `` | no |
 | nat_gateway | Indicates if you wish to create a NAT gateways or not | `true` | no |
 | nat_netmask_offset | The network mask used to calculate the NAT subnets | `8` | no |
 | nat_subnet_offset | The network offset for the NAT subnets | `30` | no |
@@ -36,7 +35,6 @@
 | environment |  |
 | ingress_sg |  |
 | kms_id |  |
-| kops_logs_bucket |  |
 | nat_cidr |  |
 | nat_gateway_private_ips |  |
 | nat_gateway_public_ips |  |
