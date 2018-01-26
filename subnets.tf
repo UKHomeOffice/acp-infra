@@ -9,6 +9,7 @@ resource "aws_subnet" "nat_subnets" {
     map("Name", format("nat-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
     map("Env", var.environment),
     map("Role", "nat-subnets"),
+    map("SubnetType", "Utility"),
     map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
     map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
 }
@@ -31,6 +32,7 @@ resource "aws_subnet" "elb_subnets" {
     map("Name", format("elb-%s.%s.%s", var.zones[count.index], var.environment, var.dns_zone)),
     map("Env", var.environment),
     map("Role", "elb-subnets"),
+    map("SubnetType", "Utility"),
     map("kubernetes.io/role/internal-elb", "true" , "kubernetes.io/role/elb", "1"),
     map("KubernetesCluster", format("%s.%s", var.environment, var.dns_zone)),
     map(format("kubernetes.io/cluster/%s.%s", var.environment, var.dns_zone), "shared"))}"
