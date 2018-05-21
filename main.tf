@@ -1,8 +1,3 @@
-# Provider will inherit from environment variables
-provider "aws" {
-  version = "= 0.1.4"
-}
-
 ## Create the hosting zone for the cluster
 resource "aws_route53_zone" "zone" {
   count = "${var.create_zone ? 1 : 0}"
