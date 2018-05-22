@@ -13,7 +13,9 @@ resource "aws_route53_zone" "zone" {
 
 ## Create the VPC
 resource "aws_vpc" "main" {
-  cidr_block = "${var.vpc_cidr}"
+  cidr_block           = "${var.vpc_cidr}"
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 
   tags = "${merge(var.tags,
     map("Name", format("%s.%s", var.environment, var.dns_zone)),
