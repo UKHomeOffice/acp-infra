@@ -34,7 +34,7 @@ variable "create_zone_rt" {
 
 variable "zones" {
   description = "A collection of availability zones to build in"
-  type        = "list"
+  type        = list(string)
 }
 
 variable "create_zone" {
@@ -91,3 +91,4 @@ variable "terraform_lock_table" {
   description = "The terraform bucket name used for state"
   default     = ""
 }
+
