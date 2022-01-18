@@ -19,6 +19,7 @@ variable "dns_zone" {
 
 variable "tags" {
   description = "A set of tags applied to the vpc being created"
+  type        = map(string)
   default     = {}
 }
 
@@ -29,6 +30,7 @@ variable "nat_gateway" {
 
 variable "create_zone_rt" {
   description = "Indicates if you wish to create a route table for the AZs (should be true if nat_gateway is true)"
+  type        = bool
   default     = true
 }
 
@@ -39,16 +41,19 @@ variable "zones" {
 
 variable "create_zone" {
   description = "Indicates you want this module to create the hosting domain for you"
+  type        = bool
   default     = true
 }
 
 variable "create_kms" {
   description = "Indicates you wish to enable a managed kms key for this cluster"
+  type        = bool
   default     = false
 }
 
 variable "enable_kms_rotation" {
   description = "If create_kms is enabled you can control key rotation from here"
+  type        = bool
   default     = false
 }
 
