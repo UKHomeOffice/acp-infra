@@ -1,7 +1,3 @@
-terraform {
-  required_version = ">= 0.12"
-}
-
 ## Create the hosting zone for the cluster
 resource "aws_route53_zone" "zone" {
   count = var.create_zone ? 1 : 0
